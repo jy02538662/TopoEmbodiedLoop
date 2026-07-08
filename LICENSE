@@ -1,0 +1,75 @@
+TopoEmbodiedLoop Source-Available Non-Commercial Research License
+Version 0.1, 2026
+
+Copyright (c) 2026 TopoEmbodiedLoop contributors
+
+Permission is granted, free of charge, to any individual or organization to use,
+copy, modify, and distribute this software and its documentation for
+non-commercial research, education, evaluation, and personal learning purposes,
+subject to the conditions below.
+
+1. Permitted Uses
+
+You may use this software for:
+
+- academic research;
+- personal study;
+- non-commercial educational use;
+- reproducibility evaluation;
+- non-commercial demonstrations;
+- non-commercial derivative research prototypes.
+
+2. Restrictions
+
+You may not, without prior written permission from the copyright holder:
+
+- use this software or substantial portions of it for commercial products,
+  commercial services, paid consulting deliverables, or internal commercial
+  deployment;
+- sell, sublicense, rent, lease, or otherwise commercially exploit this software;
+- remove or obscure copyright, license, attribution, or citation notices;
+- use the project name, author identity, or associated marks to imply endorsement;
+- claim the original ideas, architecture, benchmark design, or results as your
+  own work.
+
+3. Attribution
+
+Any copy, modification, derivative work, publication, public demonstration, or
+redistribution must include clear attribution to this project:
+
+TopoEmbodiedLoop: A Topological Perception-Memory-Control Loop for Contact-Rich
+Embodied Intelligence, v0.1.0, 2026.
+
+4. Research Publication
+
+If you use this software, its architecture, benchmark setup, or results in a
+paper, report, blog post, repository, presentation, or public communication,
+please cite the project and clearly indicate whether you used the original code
+or a modified version.
+
+5. No Patent or Trademark Grant
+
+This license does not grant any patent rights, trademark rights, or rights to
+use project names, logos, author names, or related identifiers except for
+ordinary attribution.
+
+6. Commercial Licensing
+
+Commercial use requires separate written permission. For commercial licensing,
+industrial evaluation, private deployment, or integration into paid products or
+services, contact the copyright holder.
+
+7. Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, SAFETY, ROBOTIC DEPLOYMENT, OR
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES, LOSSES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+8. Safety Notice
+
+This software is a compact research demonstration. It is not a certified safety
+controller and must not be deployed on real robots without independent safety
+analysis, testing, validation, and appropriate hardware-level safeguards.
