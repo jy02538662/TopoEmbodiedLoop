@@ -27,14 +27,15 @@ from modules.reliability_gate import ReliabilityGate
 from modules.simulator import RobotState, apply_action, initial_state, make_scene, sensor_features
 from modules.topo_guard import TopoGuard
 from modules.topo_memory import TopoMemory
+from modules.dual_topology import DualTopologyState
 
 
 MAX_STEPS = 110
 DT = 0.05
-SUCCESS_PROGRESS = 0.72
-SUCCESS_LATERAL = 0.15
+SUCCESS_PROGRESS = 0.64
+SUCCESS_LATERAL = 0.18
 HARD_FORCE = 132.0
-IMPULSE_LIMIT = 68.0
+IMPULSE_LIMIT = 74.0
 
 
 def one_hot_noisy_state(state: RobotState) -> List[float]:
@@ -57,6 +58,7 @@ def run_episode(strategy: str, scene, seed: int, memory: TopoMemory | None) -> D
     reasoner = TopoReasoner()
     guard = TopoGuard(dt=DT, hard_force=HARD_FORCE, impulse_limit=IMPULSE_LIMIT)
     controller = ContactController()
+    topology = DualTopologyState()
 
     impulse = 0.0
     max_force = state.force
@@ -73,13 +75,28 @@ def run_episode(strategy: str, scene, seed: int, memory: TopoMemory | None) -> D
         audio_probs = one_hot_noisy_state(state)
         fused_probs = gate.fuse(audio_probs, optical_pred["state_probs"], reliability)
 
+        topo_hint = topology.update(
+            state.lateral_error,
+            state.force,
+            state.tightness,
+            1.0,
+            state.progress,
+        )
+
         if strategy == "reactive":
-            action, release_dir = controller.reactive_action(fused_probs, rng)
-            scale = 1.0
+            action, release_dir, action_scale = controller.reactive_action(fused_probs, rng)
+            scale = action_scale
             memory_prior = {"risk_prior": 0.0, "release_bias": 0, "confidence": 0.0}
         else:
             belief_out = reasoner.update(fused_probs, reliability["combined"])
-            last_sig = TopoMemory().signature(scene.scene_id, belief_out["belief"], state.force, state.tightness, state.progress)
+            last_sig = TopoMemory().signature(
+                scene.scene_id,
+                belief_out["belief"],
+                state.force,
+                state.tightness,
+                state.progress,
+                topo_hint,
+            )
             if strategy == "full_loop" and memory is not None:
                 memory_prior = memory.recall(last_sig)
             else:
@@ -87,15 +104,17 @@ def run_episode(strategy: str, scene, seed: int, memory: TopoMemory | None) -> D
             guard_out = guard.update(
                 belief_out["belief"],
                 state.force,
-                state.tightness,
+                max(state.tightness, topo_hint["contact_lock"]),
                 belief_out["uncertainty"],
                 reliability["combined"],
                 memory_prior,
             )
             if guard_out["mode"] in {"retreat", "release", "slow_down", "reobserve"}:
                 emergency_count += 1
-            action, release_dir = controller.select_action(guard_out["mode"], belief_out["belief"], memory_prior, rng)
-            scale = guard_out["scale"]
+            action, release_dir, action_scale = controller.select_action(
+                guard_out["mode"], belief_out["belief"], memory_prior, topo_hint, rng
+            )
+            scale = min(guard_out["scale"], action_scale)
 
         apply_action(state, scene, action, release_dir, scale, rng)
         max_force = max(max_force, state.force)

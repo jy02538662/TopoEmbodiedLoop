@@ -14,12 +14,12 @@ This simplified version combines the core ideas of five prototypes:
 | TopoWave | `modules/contact_reasoner.py` | Estimate contact states such as `contact`, `slip`, `jam`, `release`. |
 | TopoClosedLoop | `TopoReasoner` + `TopoGuard` | Stabilize contact belief and trigger safe emergency modes. |
 | TideMemory | `modules/topo_memory.py` | Recall similar contact episodes and bias recovery strategy. |
-| VTEC | `modules/contact_controller.py` | Perform low-force insert, release, recapture, and retreat actions. |
+| VTEC | `modules/dual_topology.py` + `modules/contact_controller.py` | Track public dual-topology hints and perform low-force insert, release, recapture, and retreat actions. |
 
 The loop is:
 
 ```text
-sensor reliability -> contact belief -> memory prior -> emergency guard -> contact action
+sensor reliability -> contact belief -> dual-topology hint -> memory prior -> emergency guard -> contact action
 ```
 
 ## Why this matters
@@ -54,13 +54,15 @@ No third-party dependency is required.
 
 A representative run over 160 synthetic contact-rich episodes:
 
+> Note: These results are from a lightweight synthetic benchmark for structural validation, not from real robot experiments.
+
 | Strategy | Success | Avg peak force | Avg impulse | Avg jam steps |
 |---|---:|---:|---:|---:|
-| `reactive` | 0.0% | 105.73 | 70.27 | 6.93 |
-| `reasoner_guard` | 98.8% | 55.98 | 30.12 | 0.18 |
-| `full_loop` | 98.8% | 55.94 | 29.98 | 0.17 |
+| `reactive` | 2.5% | 104.55 | 76.15 | 7.49 |
+| `reasoner_guard` | 88.1% | 53.32 | 23.47 | 1.52 |
+| `full_loop` | 98.8% | 49.21 | 20.63 | 0.47 |
 
-Compared with `reactive`, the full loop reduces peak force by about 47% and jam steps by about 98% in this synthetic setting.
+Compared with `reactive`, the full loop reduces peak force by about 53% and jam steps by about 94% in this synthetic setting. Compared with `reasoner_guard`, the memory-enabled loop further improves repeated-scene recovery by reusing successful directions and avoiding previously failed release directions.
 
 ## Outputs
 
