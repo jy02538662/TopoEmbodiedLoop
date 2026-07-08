@@ -53,5 +53,5 @@ class TopoGuard:
             "risk": risk,
             "impulse": self.impulse,
             "force_slope": force_slope,
-            "scale": 0.45 if mode in {"slow_down", "reobserve"} else 1.0,
+            "scale": 0.62 if mode in {"slow_down", "reobserve"} else 1.0,
         }
