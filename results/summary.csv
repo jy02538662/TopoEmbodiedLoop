@@ -1,0 +1,4 @@
+strategy,episodes,success_rate,avg_steps,avg_max_force,avg_impulse,avg_jam_steps,avg_emergency_count,failure_counts
+reactive,160,0.0,17.71875,105.72522175902371,70.26708512976246,6.925,0.0,impulse:160
+reasoner_guard,160,0.9875,19.13125,55.98062875523787,30.12292126493922,0.18125,0.2625,impulse:2
+full_loop,160,0.9875,19.125,55.93523034333038,29.978500240050288,0.16875,0.2625,impulse:2

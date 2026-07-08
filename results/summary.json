@@ -1,0 +1,35 @@
+[
+  {
+    "strategy": "reactive",
+    "episodes": 160,
+    "success_rate": 0.0,
+    "avg_steps": 17.71875,
+    "avg_max_force": 105.72522175902371,
+    "avg_impulse": 70.26708512976246,
+    "avg_jam_steps": 6.925,
+    "avg_emergency_count": 0.0,
+    "failure_counts": "impulse:160"
+  },
+  {
+    "strategy": "reasoner_guard",
+    "episodes": 160,
+    "success_rate": 0.9875,
+    "avg_steps": 19.13125,
+    "avg_max_force": 55.98062875523787,
+    "avg_impulse": 30.12292126493922,
+    "avg_jam_steps": 0.18125,
+    "avg_emergency_count": 0.2625,
+    "failure_counts": "impulse:2"
+  },
+  {
+    "strategy": "full_loop",
+    "episodes": 160,
+    "success_rate": 0.9875,
+    "avg_steps": 19.125,
+    "avg_max_force": 55.93523034333038,
+    "avg_impulse": 29.978500240050288,
+    "avg_jam_steps": 0.16875,
+    "avg_emergency_count": 0.2625,
+    "failure_counts": "impulse:2"
+  }
+]
