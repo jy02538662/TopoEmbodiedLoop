@@ -1,1 +1,4 @@
-# No third-party dependency is required for this compact demo.
+# Core demo: no third-party dependency is required.
+# Optional visualization tools for GIF rendering:
+matplotlib>=3.8
+pillow>=10.0
